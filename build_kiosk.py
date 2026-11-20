@@ -28,59 +28,76 @@ PER_SOURCE = 4
 TOPICS = ['cycle', 'perimenopause', 'pregnancy', 'fertility']
 INTIMACY = 'intimacy'
 
-# (source, feed, topic or None). With a topic, every item of the feed is
-# filed under it unless its words say otherwise; without, an item needs
-# the words of a topic to be kept.
+# (source, feed, topic or None, country of the medium). With a topic,
+# every item of the feed is filed under it unless its words say otherwise;
+# without, an item needs the words of a topic to be kept.
+#
+# Each country has pages of its own, made of its own media only: a short
+# page is an honest page, and nothing from elsewhere fills it. The pages
+# of a language alone, for a country with no medium here, mix them all.
 FEEDS = {
     'fr': [
-        ('Le Monde', 'https://www.lemonde.fr/intimites/rss_full.xml', None),
-        ('Libération', 'https://www.liberation.fr/arc/outboundfeeds/rss-all/category/lifestyle/intimites/?outputType=xml', None),
-        ('La Presse', 'https://www.lapresse.ca/societe/sexualite/rss', INTIMACY),
-        ('7sur7', 'https://www.7sur7.be/sexe-et-relations/rss.xml', INTIMACY),
-        ('Flair', 'https://www.flair.be/fr/feed/', None),
-        ('Psychologies', 'https://www.psychologies.com/rss', None),
-        ('Marie France', 'https://www.mariefrance.fr/feed', None),
-        ('Biba', 'https://www.bibamagazine.fr/feed', None),
-        ('Elle Belgique', 'https://www.elle.be/fr/feed', None),
-        ('Marie Claire Belgique', 'https://www.marieclaire.be/fr/feed/', None),
-        ("Femmes d'Aujourd'hui", 'https://www.femmesdaujourdhui.be/feed/', None),
-        ('Santé Magazine', 'https://www.santemagazine.fr/feeds/rss', None),
-        ('La Libre', 'https://www.lalibre.be/arc/outboundfeeds/rss/section/lifestyle/?outputType=xml', None),
-        ('Le Temps', 'https://www.letemps.ch/societe.rss', None),
-        ("L'Obs", 'https://www.nouvelobs.com/rue89/rss.xml', None),
-        ('HuffPost', 'https://www.huffingtonpost.fr/life/rss_headline.xml', None),
-        ('Slate', 'https://www.slate.fr/rss.xml', None),
-        ('Parents', 'https://www.parents.fr/feeds/rss', None),
-        ('Journal des Femmes', 'https://www.journaldesfemmes.fr/rss/', None),
-        ('Parents', 'https://www.parents.fr/feeds/rss/grossesse', 'pregnancy'),
-        ('franceinfo', 'https://www.francetvinfo.fr/sante/grossesse.rss', None),
-        ('Santé Magazine', 'https://www.santemagazine.fr/feeds/rss/grossesse', 'pregnancy'),
-        ('Madmoizelle', 'https://www.madmoizelle.com/rubriques/daronne/grossesse/feed', 'pregnancy'),
-        ('Madmoizelle', 'https://www.madmoizelle.com/feed', None),
-        ('Marie France', 'https://www.mariefrance.fr/tag/menopause/feed', 'perimenopause'),
-        ('Sciences et Avenir', 'https://www.sciencesetavenir.fr/sante/rss.xml', None),
-        ('The Conversation', 'https://theconversation.com/fr/sante/articles.atom', None),
-        ('Le Figaro', 'https://www.lefigaro.fr/rss/figaro_sante.xml', None),
-        ('20 Minutes', 'https://www.20minutes.fr/feeds/rss-sante.xml', None),
-        ('La Presse', 'https://www.lapresse.ca/societe/sante/rss', None),
-        ('Aufeminin', 'https://www.aufeminin.com/rss', None),
-        ('Moustique', 'https://www.moustique.be/feed', None),
-        ('Top Santé', 'https://www.topsante.com/rss', None),
+        ('Le Monde', 'https://www.lemonde.fr/intimites/rss_full.xml', None, 'fr'),
+        ('Libération', 'https://www.liberation.fr/arc/outboundfeeds/rss-all/category/lifestyle/intimites/?outputType=xml', None, 'fr'),
+        ('La Presse', 'https://www.lapresse.ca/societe/sexualite/rss', INTIMACY, 'ca'),
+        ('7sur7', 'https://www.7sur7.be/sexe-et-relations/rss.xml', INTIMACY, 'be'),
+        ('Flair', 'https://www.flair.be/fr/feed/', None, 'be'),
+        ('Psychologies', 'https://www.psychologies.com/rss', None, 'fr'),
+        ('Marie France', 'https://www.mariefrance.fr/feed', None, 'fr'),
+        ('Biba', 'https://www.bibamagazine.fr/feed', None, 'fr'),
+        ('Elle Belgique', 'https://www.elle.be/fr/feed', None, 'be'),
+        ('Marie Claire Belgique', 'https://www.marieclaire.be/fr/feed/', None, 'be'),
+        ("Femmes d'Aujourd'hui", 'https://www.femmesdaujourdhui.be/feed/', None, 'be'),
+        ('Santé Magazine', 'https://www.santemagazine.fr/feeds/rss', None, 'fr'),
+        ('La Libre', 'https://www.lalibre.be/arc/outboundfeeds/rss/section/lifestyle/?outputType=xml', None, 'be'),
+        ('Le Temps', 'https://www.letemps.ch/societe.rss', None, 'ch'),
+        ("L'Obs", 'https://www.nouvelobs.com/rue89/rss.xml', None, 'fr'),
+        ('HuffPost', 'https://www.huffingtonpost.fr/life/rss_headline.xml', None, 'fr'),
+        ('Slate', 'https://www.slate.fr/rss.xml', None, 'fr'),
+        ('Parents', 'https://www.parents.fr/feeds/rss', None, 'fr'),
+        ('Journal des Femmes', 'https://www.journaldesfemmes.fr/rss/', None, 'fr'),
+        ('Parents', 'https://www.parents.fr/feeds/rss/grossesse', 'pregnancy', 'fr'),
+        ('franceinfo', 'https://www.francetvinfo.fr/sante/grossesse.rss', None, 'fr'),
+        ('Santé Magazine', 'https://www.santemagazine.fr/feeds/rss/grossesse', 'pregnancy', 'fr'),
+        ('Madmoizelle', 'https://www.madmoizelle.com/rubriques/daronne/grossesse/feed', 'pregnancy', 'fr'),
+        ('Madmoizelle', 'https://www.madmoizelle.com/feed', None, 'fr'),
+        ('Marie France', 'https://www.mariefrance.fr/tag/menopause/feed', 'perimenopause', 'fr'),
+        ('Sciences et Avenir', 'https://www.sciencesetavenir.fr/sante/rss.xml', None, 'fr'),
+        ('The Conversation', 'https://theconversation.com/fr/sante/articles.atom', None, 'fr'),
+        ('Le Figaro', 'https://www.lefigaro.fr/rss/figaro_sante.xml', None, 'fr'),
+        ('20 Minutes', 'https://www.20minutes.fr/feeds/rss-sante.xml', None, 'fr'),
+        ('La Presse', 'https://www.lapresse.ca/societe/sante/rss', None, 'ca'),
+        ('Aufeminin', 'https://www.aufeminin.com/rss', None, 'fr'),
+        ('Moustique', 'https://www.moustique.be/feed', None, 'be'),
+        ('Top Santé', 'https://www.topsante.com/rss', None, 'fr'),
+        ('Paris Match Belgique', 'https://www.parismatch.be/feed/', None, 'be'),
+        ('La Libre', 'https://www.lalibre.be/arc/outboundfeeds/rss/?outputType=xml', None, 'be'),
+        ('DH', 'https://www.dhnet.be/arc/outboundfeeds/rss/?outputType=xml', None, 'be'),
+        ('7sur7', 'https://www.7sur7.be/rss.xml', None, 'be'),
     ],
     'en': [
-        ('The Guardian', 'https://www.theguardian.com/lifeandstyle/series/this-is-how-we-do-it/rss', INTIMACY),
-        ('The Guardian', 'https://www.theguardian.com/lifeandstyle/sex/rss', INTIMACY),
-        ('The Guardian', 'https://www.theguardian.com/society/menopause/rss', 'perimenopause'),
-        ('The Guardian', 'https://www.theguardian.com/lifeandstyle/pregnancy/rss', 'pregnancy'),
-        ('The Guardian', 'https://www.theguardian.com/society/menstruation/rss', 'cycle'),
-        ('The Guardian', 'https://www.theguardian.com/society/fertility-problems/rss', 'fertility'),
-        ('Cosmopolitan', 'https://www.cosmopolitan.com/rss/sex-love.xml/', INTIMACY),
-        ('Cosmopolitan', 'https://www.cosmopolitan.com/uk/rss/love-sex.xml/', INTIMACY),
-        ('Metro', 'https://metro.co.uk/lifestyle/sex/feed/', INTIMACY),
-        ('Self', 'https://www.self.com/feed/rss', None),
-        ('Bustle', 'https://www.bustle.com/rss', None),
-        ('Red', 'https://www.redonline.co.uk/rss/all.xml/', None),
-        ('Good Housekeeping', 'https://www.goodhousekeeping.com/uk/rss/health.xml/', None),
+        ('The Guardian', 'https://www.theguardian.com/lifeandstyle/series/this-is-how-we-do-it/rss', INTIMACY, 'gb'),
+        ('The Guardian', 'https://www.theguardian.com/lifeandstyle/sex/rss', INTIMACY, 'gb'),
+        ('The Guardian', 'https://www.theguardian.com/society/menopause/rss', 'perimenopause', 'gb'),
+        ('The Guardian', 'https://www.theguardian.com/lifeandstyle/pregnancy/rss', 'pregnancy', 'gb'),
+        ('The Guardian', 'https://www.theguardian.com/society/menstruation/rss', 'cycle', 'gb'),
+        ('The Guardian', 'https://www.theguardian.com/society/fertility-problems/rss', 'fertility', 'gb'),
+        ('Cosmopolitan', 'https://www.cosmopolitan.com/rss/sex-love.xml/', INTIMACY, 'us'),
+        ('Cosmopolitan', 'https://www.cosmopolitan.com/uk/rss/love-sex.xml/', INTIMACY, 'gb'),
+        ('Metro', 'https://metro.co.uk/lifestyle/sex/feed/', INTIMACY, 'gb'),
+        ('Self', 'https://www.self.com/feed/rss', None, 'us'),
+        ('Bustle', 'https://www.bustle.com/rss', None, 'us'),
+        ('Red', 'https://www.redonline.co.uk/rss/all.xml/', None, 'gb'),
+        ('Good Housekeeping', 'https://www.goodhousekeeping.com/uk/rss/health.xml/', None, 'gb'),
+        ('The Guardian', 'https://www.theguardian.com/lifeandstyle/parents-and-parenting/rss', None, 'gb'),
+        ("Women's Health", 'https://www.womenshealthmag.com/uk/rss/all.xml/', None, 'gb'),
+        ('Stylist', 'https://www.stylist.co.uk/feed', None, 'gb'),
+        ('Metro', 'https://metro.co.uk/lifestyle/health/feed/', None, 'gb'),
+        ('Cosmopolitan', 'https://www.cosmopolitan.com/uk/rss/body.xml/', None, 'gb'),
+        ('Scary Mommy', 'https://www.scarymommy.com/rss', None, 'us'),
+        ('Oprah Daily', 'https://www.oprahdaily.com/rss/all.xml/', None, 'us'),
+        ("Women's Health", 'https://www.womenshealthmag.com/rss/all.xml/', None, 'us'),
+        ('Romper', 'https://www.romper.com/rss', None, 'us'),
     ],
 }
 
@@ -108,7 +125,7 @@ WORDS = {
 # well: the app gives no advice on it (CLAUDE.md, rule 7).
 NOT_LIGHT = {
     'fr': r'viols?\b|violé|violeur|agress|violen|féminicide|meurtr|\btué|\bmorts?\b|\bmortes?\b|\bmourir|\bmeurt|décès|décéd|suicid|cancer|tumeur|procès|tribunal|condamn|plainte|accusé|inceste|pédo|harcèlement|\bdeuil|fausses? couches?|drame|tragédie|guerre|attentat|maladie grave|\bist\b|\bvih\b|sida|infection|scandale|prison|police|proxén|prostitu|\bporno|contracepti|pilule|stérilet|\bivg\b|avortement|appli de suivi|application de suivi|travailleu|risque|danger|alerte|inqui[eé]t|interdi|pesticide|toxique|\bcrise|pénurie|carence|parkinson|endométriose|douleur|souffr|\bpeur|honte|tabou|précarité|arnaque|rupture|divorce|tromp|infid|déteste|mal-être|déconseill|misogyn|sexis|\d ?€|\beuros?\b|bon plan|\bpromo',
-    'en': r'\brape|rapist|assault|abus|violen|murder|\bkill|\bdead\b|\bdeath|\bdied\b|\bdies\b|\bdying\b|suicid|cancer|tumou?r|\btrial\b|court\b|convict|sentenc|lawsuit|accus|incest|\bpaedo|\bpedo|groom|harass|grief|griev|miscarriage|stillb|tragedy|\bwar\b|attack|\bsti\b|\bstis\b|\bhiv\b|infection|scandal|prison|police|traffick|\bporn|contracepti|\bpills?\b|\biud\b|abortion|period.track|tracking app|\bshop\b|\bdeals?\b|\bbest \d+|black friday|\bsale\b|\bbanned|shocking|denial|closure|crisis|\brisk|\bwarn|\bfear|toxic|chemical|(?<!in-)\blaws?\b|\bban\b|despair|problematic|epidemic|\bcope\b|endometriosis|\bpain|suffer|shame|poverty|scam|divorce|cheat|affair|brief letters|– review|podcast|sex work(?!s\b)|onlyfans',
+    'en': r'\brape|rapist|assault|abus|violen|murder|\bkill|\bdead\b|\bdeath|\bdied\b|\bdies\b|\bdying\b|suicid|cancer|tumou?r|\btrial\b|court\b|convict|sentenc|lawsuit|accus|incest|\bpaedo|\bpedo|groom|harass|grief|griev|miscarriage|stillb|tragedy|\bwar\b|attack|\bsti\b|\bstis\b|\bhiv\b|infection|scandal|prison|police|traffick|\bporn|contracepti|\bpills?\b|\biud\b|abortion|period.track|tracking app|\bshop\b|\bdeals?\b|\bbest \d+|black friday|\bsale\b|\bbanned|shocking|denial|closure|crisis|\brisk|\bwarn|\bfear|toxic|chemical|(?<!in-)\blaws?\b|\bban\b|despair|problematic|epidemic|\bcope\b|endometriosis|\bpain|suffer|shame|poverty|scam|divorce|cheat|affair|brief letters|– review|podcast|sex work(?!s\b)|onlyfans|life-threatening|bleed|\bhurt|teen pregnan|\d+ best\b|best products|\breview\b|tested',
 }
 
 # Words about minors. An item that has them is never filed under intimacy,
@@ -161,6 +178,13 @@ TEXTS = {
         },
     },
 }
+
+
+
+def countries_of(language):
+    """The countries with pages of their own in a language."""
+    return sorted({feed[3] for feed in FEEDS[language]})
+
 
 MEDIA = '{http://search.yahoo.com/mrss/}'
 ATOM = '{http://www.w3.org/2005/Atom}'
@@ -274,6 +298,22 @@ def is_testimony(language, item):
     return re.search(TESTIMONY[language], item['title'].lower()) is not None
 
 
+def words_of(title):
+    return {word for word in re.findall(r'\w{4,}', title.lower())}
+
+
+def same_story(title, others):
+    """Whether a title tells what one of the others already tells: the
+    same dispatch is often printed by several papers."""
+    words = words_of(title)
+    for other in others:
+        theirs = words_of(other)
+        if words and theirs and (
+                len(words & theirs) >= 0.5 * min(len(words), len(theirs))):
+            return True
+    return False
+
+
 def select(language, feeds, now):
     """Sorts the items of the feeds: {topic: [item, ...]}, newest first."""
     limit = now - datetime.timedelta(days=MAX_AGE_DAYS)
@@ -295,8 +335,11 @@ def select(language, feeds, now):
         kept, count = [], {}
         for item in items:
             count[item['source']] = count.get(item['source'], 0) + 1
-            if count[item['source']] <= PER_SOURCE:
-                kept.append(item)
+            if count[item['source']] > PER_SOURCE:
+                continue
+            if same_story(item['title'], [one['title'] for one in kept]):
+                continue
+            kept.append(item)
         shelves[topic] = kept[:PER_TOPIC]
     return shelves
 
@@ -394,22 +437,29 @@ def main(folder):
     total = 0
     for language, feeds in FEEDS.items():
         read = []
-        for source, address, default in feeds:
+        for source, address, default, country in feeds:
             try:
                 items = parse(fetch(address))
                 print('%3d  %s' % (len(items), address))
-                read.append((source, default, items))
+                read.append((source, default, items, country))
             except Exception as error:  # noqa: BLE001 - a feed that fails
                 print('--   %s  (%s)' % (address, type(error).__name__))
-        shelves = select(language, read, now)
-        os.makedirs(os.path.join(folder, language), exist_ok=True)
-        for name, topics in (('index', TOPICS), (INTIMACY, [INTIMACY])):
-            text, shown = page(language, topics, shelves, now)
-            total += shown
-            path = os.path.join(folder, language, name + '.html')
-            with open(path, 'w', encoding='utf-8', newline='\n') as file:
-                file.write(text)
-            print('%s: %d articles' % (path, shown))
+        # The language alone, then each country with its own media only.
+        for country in [None] + countries_of(language):
+            shelves = select(language, [
+                feed[:3] for feed in read
+                if country is None or feed[3] == country], now)
+            parts = [folder, language] + ([country] if country else [])
+            os.makedirs(os.path.join(*parts), exist_ok=True)
+            for name, topics in (('index', TOPICS), (INTIMACY, [INTIMACY])):
+                text, shown = page(language, topics, shelves, now)
+                if country is None:
+                    total += shown
+                path = os.path.join(*(parts + [name + '.html']))
+                with open(path, 'w', encoding='utf-8',
+                          newline='\n') as file:
+                    file.write(text)
+                print('%s: %d articles' % (path, shown))
     # The root says nothing: the app always opens a page of a language.
     with open(os.path.join(folder, 'index.html'), 'w', encoding='utf-8',
               newline='\n') as file:

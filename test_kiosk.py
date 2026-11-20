@@ -138,8 +138,26 @@ class KioskTest(unittest.TestCase):
         for language in kiosk.FEEDS:
             for topic in kiosk.TOPICS + [kiosk.INTIMACY]:
                 self.assertIn(topic, kiosk.TEXTS[language]['topics'])
-            for _, address, _ in kiosk.FEEDS[language]:
+            for _, address, _, _ in kiosk.FEEDS[language]:
                 self.assertTrue(address.startswith('https://'))
+
+
+    def test_the_same_story_is_shown_once(self):
+        first = 'Eight months pregnant, a woman finishes the marathon'
+        self.assertTrue(kiosk.same_story(
+            '"My last adventure": eight months pregnant, she finishes '
+            'the marathon of New York', [first]))
+        self.assertFalse(kiosk.same_story(
+            'Pregnancy: what to pack for the hospital', [first]))
+
+    def test_every_feed_says_its_country(self):
+        # The app opens these pages by name: see lib/domain/kiosk.dart.
+        self.assertEqual(kiosk.countries_of('fr'), ['be', 'ca', 'ch', 'fr'])
+        self.assertEqual(kiosk.countries_of('en'), ['gb', 'us'])
+        for feeds in kiosk.FEEDS.values():
+            for feed in feeds:
+                self.assertEqual(len(feed), 4, feed[0])
+                self.assertTrue(feed[1].startswith('https://'), feed[0])
 
 
 if __name__ == '__main__':
