@@ -33,7 +33,7 @@ jobs:
         run: python3 test_kiosk.py
       - name: Build the kiosk
         run: python3 build_kiosk.py _site
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
       - id: deploy
