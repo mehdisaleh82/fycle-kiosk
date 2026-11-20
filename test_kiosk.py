@@ -142,6 +142,31 @@ class KioskTest(unittest.TestCase):
                 self.assertTrue(address.startswith('https://'))
 
 
+    def test_the_page_about_intimacy_keeps_the_tone_of_the_guides(self):
+        def item(title, day=19):
+            return {'title': title, 'link': 'https://example.org/' + title,
+                    'summary': '', 'picture': None,
+                    'date': NOW.replace(day=day)}
+        # A title that lectures or starts from a failing is left out.
+        for title in ('Five sex mistakes you should stop making',
+                      'Is it normal to have sex this often?'):
+            self.assertIsNone(
+                kiosk.topic_of('en', item(title), kiosk.INTIMACY), title)
+        self.assertIsNone(kiosk.topic_of(
+            'fr', item('Sexe : les erreurs à éviter'), None))
+        # The other pages are not concerned.
+        self.assertEqual(kiosk.topic_of(
+            'en', item('Is it normal to sleep less at menopause?'), None),
+            'perimenopause')
+        # Pleasure and discovery come first, even when older.
+        shelves = kiosk.select('en', [('Paper', kiosk.INTIMACY, [
+            item('A column about sex', day=19),
+            item('New ways to explore pleasure', day=10),
+        ])], NOW)
+        self.assertEqual(
+            [one['title'] for one in shelves[kiosk.INTIMACY]],
+            ['New ways to explore pleasure', 'A column about sex'])
+
     def test_the_same_story_is_shown_once(self):
         first = 'Eight months pregnant, a woman finishes the marathon'
         self.assertTrue(kiosk.same_story(

@@ -136,6 +136,20 @@ MINORS = {
     'en': r'\bteen|\bchild|\bkids?\b|\bbab(y|ies)\b|schoolgirl|underage|\bminors?\b|\bdaughters?\b|\bsons?\b|\bpupils?\b',
 }
 
+# The page about intimacy keeps the tone of the guides of the app:
+# discovery, exploration, pleasure. A title that lectures, warns or starts
+# from a failing is left out of it.
+OFF_TONE = {
+    'fr': r'il faut\b|faut-il|ne (faut|doit|doivent|devrait) (pas|jamais|plus)|devrai[st]\b|devraient|erreurs?\b|à éviter|à ne (pas|plus|jamais)|\barrêt|\bjamais\b|mauvais|problèmes?\b|malsain|addict|culpab|\bpannes?\b|\bennui|inqui|angoiss|complex|simul|normal\b|fréquence|combien de fois|trop\b|pas assez|manque|baisse|\bmoins\b|\bplus de (sexe|désir|libido)|frustr|jalous|dispute|reproch|juge',
+    'en': r'\bshould|\bmust\b|have to\b|need to\b|mistakes?\b|red flags?|\bwrong|\bstop\b|\bnever\b|\bbad\b|problems?\b|unhealthy|addict|guilt|\bmad at\b|\bduty\b|dry spell|drought|sexless|boring|turn-?offs?|worr(y|ied)|anxi|struggl|\bnormal\b|how often|too (much|little|often)|not enough|\black\b|\blow\b|\bless\b|frustrat|jealous|\bfight|resent|\bjudg|weird|awkward|regret',
+}
+
+# What the page is for: these come first.
+PLEASURE = {
+    'fr': r'plaisir|orgasme|\bjouir|explor|découvr|essay|jouets?\b|sextoy|sex-toy|fantasme|positions?\b|masturb|\bdésir|érotique|coquin|caress|préliminaires|piment|sensuel|envies?\b',
+    'en': r'pleasure|orgasm|explor|discover|\btry|\btoys?\b|vibrator|fantas|positions?\b|masturbat|\bdesire|erotic|\bkink|foreplay|turn-?ons?\b|sensual|\bjoy',
+}
+
 # Someone speaking for herself.
 TESTIMONY = {
     'fr': r'témoign|\braconte|\bconfie|\bj.ai\b|\bje\b|\bmoi,|\bmon\b|\bma\b',
@@ -284,11 +298,16 @@ def topic_of(language, item, default):
         return None
     # Anything about sex goes to the page about intimacy and nowhere else:
     # the general page is open to all, minors included.
-    if default == INTIMACY:
-        return INTIMACY
-    for topic, words in [WORDS[language][-1]] + WORDS[language][:-1]:
-        if re.search(words, title):
-            return topic
+    found = default if default == INTIMACY else None
+    if found is None:
+        for topic, words in [WORDS[language][-1]] + WORDS[language][:-1]:
+            if re.search(words, title):
+                found = topic
+                break
+    if found == INTIMACY and re.search(OFF_TONE[language], title):
+        return None
+    if found is not None:
+        return found
     # A feed about everything is judged on its titles alone: a word in
     # passing in a summary says little about the subject.
     return default
@@ -332,6 +351,10 @@ def select(language, feeds, now):
                 item, source=source, testimony=is_testimony(language, item)))
     for topic, items in shelves.items():
         items.sort(key=lambda item: item['date'], reverse=True)
+        if topic == INTIMACY:
+            # Pleasure and discovery first, the newest first among them.
+            items.sort(key=lambda item: re.search(
+                PLEASURE[language], item['title'].lower()) is None)
         kept, count = [], {}
         for item in items:
             count[item['source']] = count.get(item['source'], 0) + 1
