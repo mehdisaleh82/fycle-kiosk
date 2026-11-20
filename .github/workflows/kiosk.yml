@@ -1,0 +1,40 @@
+name: Kiosk
+
+# Builds the kiosk once a day: a small web site listing recent articles
+# by topic, read from the public feeds of a few media, and publishes it
+# with GitHub Pages. The app only hands its address to the browser of the
+# phone. Runs on Linux: it costs almost nothing.
+on:
+  schedule:
+    - cron: '47 4 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: kiosk
+  cancel-in-progress: true
+
+jobs:
+  kiosk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check the sorting
+        run: python3 test_kiosk.py
+      - name: Build the kiosk
+        run: python3 build_kiosk.py _site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - id: deploy
+        uses: actions/deploy-pages@v4
