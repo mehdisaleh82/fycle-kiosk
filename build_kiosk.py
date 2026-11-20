@@ -7,8 +7,7 @@ light in tone, and writes plain pages: no script, no cookie and no counter
 of ours. Pictures are loaded from the publishers, who see the visit.
 The app only hands the address of a page to the browser of the phone; it
 never reads the kiosk itself (CLAUDE.md, rule 1). The sorting is automatic
-and nobody reads the articles: the pages say so. See the README of this repository,
-decision 169. Standard library only.
+and nobody reads the articles: the pages say so. Standard library only.
 """
 import datetime
 import email.utils
