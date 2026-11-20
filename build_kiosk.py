@@ -308,8 +308,8 @@ def same_story(title, others):
     words = words_of(title)
     for other in others:
         theirs = words_of(other)
-        if words and theirs and (
-                len(words & theirs) >= 0.5 * min(len(words), len(theirs))):
+        shared = len(words & theirs)
+        if shared >= 4 and shared >= 0.6 * min(len(words), len(theirs)):
             return True
     return False
 
