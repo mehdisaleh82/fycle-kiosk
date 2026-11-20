@@ -84,7 +84,18 @@ class KioskTest(unittest.TestCase):
             kiosk.topic_of('fr', item("Faire l'amour pendant ses règles"),
                            None),
             kiosk.INTIMACY)
-        # Nothing about the young on any page.
+        # Sex and the young never meet, on any page.
+        self.assertIsNone(
+            kiosk.topic_of('en', item('What my daughter taught me'),
+                           kiosk.INTIMACY))
+        self.assertIsNone(
+            kiosk.topic_of('fr', {**item('Grossesse : le guide'),
+                                  'summary': 'Sexe et enfants.'}, None))
+        # On the other pages, a child is the subject itself.
+        self.assertEqual(
+            kiosk.topic_of('fr', item('Grossesse : préparer son enfant'),
+                           None),
+            'pregnancy')
         self.assertIsNone(
             kiosk.topic_of('fr', item('Sexualité des ados : le guide'), None))
         self.assertIsNone(

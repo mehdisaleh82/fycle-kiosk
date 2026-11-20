@@ -52,6 +52,20 @@ FEEDS = {
         ('Slate', 'https://www.slate.fr/rss.xml', None),
         ('Parents', 'https://www.parents.fr/feeds/rss', None),
         ('Journal des Femmes', 'https://www.journaldesfemmes.fr/rss/', None),
+        ('Parents', 'https://www.parents.fr/feeds/rss/grossesse', 'pregnancy'),
+        ('franceinfo', 'https://www.francetvinfo.fr/sante/grossesse.rss', None),
+        ('Santé Magazine', 'https://www.santemagazine.fr/feeds/rss/grossesse', 'pregnancy'),
+        ('Madmoizelle', 'https://www.madmoizelle.com/rubriques/daronne/grossesse/feed', 'pregnancy'),
+        ('Madmoizelle', 'https://www.madmoizelle.com/feed', None),
+        ('Marie France', 'https://www.mariefrance.fr/tag/menopause/feed', 'perimenopause'),
+        ('Sciences et Avenir', 'https://www.sciencesetavenir.fr/sante/rss.xml', None),
+        ('The Conversation', 'https://theconversation.com/fr/sante/articles.atom', None),
+        ('Le Figaro', 'https://www.lefigaro.fr/rss/figaro_sante.xml', None),
+        ('20 Minutes', 'https://www.20minutes.fr/feeds/rss-sante.xml', None),
+        ('La Presse', 'https://www.lapresse.ca/societe/sante/rss', None),
+        ('Aufeminin', 'https://www.aufeminin.com/rss', None),
+        ('Moustique', 'https://www.moustique.be/feed', None),
+        ('Top Santé', 'https://www.topsante.com/rss', None),
     ],
     'en': [
         ('The Guardian', 'https://www.theguardian.com/lifeandstyle/series/this-is-how-we-do-it/rss', INTIMACY),
@@ -75,16 +89,16 @@ FEEDS = {
 WORDS = {
     'fr': [
         ('perimenopause', r'ménopaus|bouffées? de chaleur'),
-        ('fertility', r'fertilité|\bpma\b|\bfiv\b|tomber enceinte|désir d.enfant|projet bébé|essai bébé'),
-        ('pregnancy', r'grossesse|enceinte(?!s? (bluetooth|connectée|sans fil|nomade))|accouch|post-partum|postpartum|allaitement|jeune maman|jeunes? mères?|nouveau-né'),
-        ('cycle', r'\b(ses|mes|tes|des|les|premières|pendant les|avoir ses) règles\b(?! (de|du|d.|pour|sur|à)\b)|menstru|cycle féminin|syndrome prémenstruel|\bspm\b'),
+        ('fertility', r'fertilité|\bpma\b|\bfiv\b|tomber enceinte|désir d.enfant|projet bébé|essai bébé|ovocyte|avoir un (enfant|bébé)'),
+        ('pregnancy', r'grossesse|enceinte(?!s? (bluetooth|connectée|sans fil|nomade))|accouch|post-partum|postpartum|allaitement|jeune maman|jeunes? mères?|nouveau-né|nourrisson|sage-femme|maternité|congé (de )?(maternité|paternité)'),
+        ('cycle', r'\b(ses|mes|tes|des|les|premières|pendant les|avoir ses) règles\b(?! (de|du|d.|pour|sur|à)\b)|menstru|cycle féminin|syndrome prémenstruel|\bspm\b|ovulation|protections? (périodiques?|hygiéniques?)|\btampons?\b(?! (encreur|de|du)\b)'),
         (INTIMACY, r'\bsexe\b|\bsexo\b|sexualité|sexuel|orgasme|\bdésir\b|libido|plaisir féminin|clitoris|masturb|sextoy|sex-toy|faire l.amour|\bjouir\b|jouissance|fantasme|au lit\b|érotique|charnel|coquin'),
     ],
     'en': [
         ('perimenopause', r'menopaus|hot flush|hot flash'),
-        ('fertility', r'fertility|\bivf\b|trying to conceive|egg freezing'),
-        ('pregnancy', r'pregnan|childbirth|giving birth|postpartum|postnatal|breastfeed|new mum|new mom|newborn'),
-        ('cycle', r'\b(your|my|her|their|on your|first) periods?\b|menstru|\bpms\b'),
+        ('fertility', r'fertility|\bivf\b|trying to conceive|egg freezing|frozen eggs|trying for a baby'),
+        ('pregnancy', r'pregnan|childbirth|giving birth|postpartum|postnatal|breastfeed|new mum|new mom|newborn|midwi|maternity'),
+        ('cycle', r'\b(your|my|her|their|on your|first) periods?\b|menstru|\bpms\b|ovulation|tampons?\b'),
         (INTIMACY, r'\bsex\b|sexual|orgasm|\bdesire\b|libido|clitoris|masturbat|sex toy|vibrator|in bed\b|foreplay|\bkink|erotic|intimacy'),
     ],
 }
@@ -93,8 +107,16 @@ WORDS = {
 # words is left out, whatever the rest says. Contraception is left out as
 # well: the app gives no advice on it (CLAUDE.md, rule 7).
 NOT_LIGHT = {
-    'fr': r'viols?\b|violé|violeur|agress|violen|féminicide|meurtr|\btué|\bmorts?\b|\bmortes?\b|\bmourir|\bmeurt|décès|décéd|suicid|cancer|tumeur|procès|tribunal|condamn|plainte|accusé|inceste|pédo|harcèlement|\bdeuil|fausses? couches?|drame|tragédie|guerre|attentat|maladie grave|\bist\b|\bvih\b|sida|infection|scandale|prison|police|proxén|prostitu|\bporno|mineur|\bados?\b|adolescen|collégien|lycéen|\benfants?\b|enfants? victimes?|contracepti|pilule|stérilet|\bivg\b|avortement|appli de suivi|application de suivi|travailleu|risque|danger|alerte|inqui[eé]t|interdi|pesticide|toxique|\bcrise|pénurie|carence|parkinson|endométriose|douleur|souffr|\bpeur|honte|tabou|précarité|arnaque|rupture|divorce|tromp|infid|déteste|mal-être',
-    'en': r'\brape|rapist|assault|abus|violen|murder|\bkill|\bdead\b|\bdeath|\bdied\b|\bdies\b|\bdying\b|suicid|cancer|tumou?r|\btrial\b|court\b|convict|sentenc|lawsuit|accus|incest|\bpaedo|\bpedo|groom|\bteen|\bchild|\bkids?\b|schoolgirl|harass|grief|griev|miscarriage|stillb|tragedy|\bwar\b|attack|\bsti\b|\bstis\b|\bhiv\b|infection|scandal|prison|police|traffick|\bporn|underage|\bminors?\b|contracepti|\bpills?\b|\biud\b|abortion|period.track|tracking app|\bshop\b|\bdeals?\b|\bbest \d+|black friday|\bsale\b|\bbanned|shocking|denial|closure|crisis|\brisk|\bwarn|\bfear|toxic|chemical|(?<!in-)\blaws?\b|\bban\b|despair|problematic|epidemic|\bcope\b|endometriosis|\bpain|suffer|shame|poverty|scam|divorce|cheat|affair|brief letters|– review|podcast|sex work(?!s\b)|onlyfans',
+    'fr': r'viols?\b|violé|violeur|agress|violen|féminicide|meurtr|\btué|\bmorts?\b|\bmortes?\b|\bmourir|\bmeurt|décès|décéd|suicid|cancer|tumeur|procès|tribunal|condamn|plainte|accusé|inceste|pédo|harcèlement|\bdeuil|fausses? couches?|drame|tragédie|guerre|attentat|maladie grave|\bist\b|\bvih\b|sida|infection|scandale|prison|police|proxén|prostitu|\bporno|contracepti|pilule|stérilet|\bivg\b|avortement|appli de suivi|application de suivi|travailleu|risque|danger|alerte|inqui[eé]t|interdi|pesticide|toxique|\bcrise|pénurie|carence|parkinson|endométriose|douleur|souffr|\bpeur|honte|tabou|précarité|arnaque|rupture|divorce|tromp|infid|déteste|mal-être|déconseill|misogyn|sexis|\d ?€|\beuros?\b|bon plan|\bpromo',
+    'en': r'\brape|rapist|assault|abus|violen|murder|\bkill|\bdead\b|\bdeath|\bdied\b|\bdies\b|\bdying\b|suicid|cancer|tumou?r|\btrial\b|court\b|convict|sentenc|lawsuit|accus|incest|\bpaedo|\bpedo|groom|harass|grief|griev|miscarriage|stillb|tragedy|\bwar\b|attack|\bsti\b|\bstis\b|\bhiv\b|infection|scandal|prison|police|traffick|\bporn|contracepti|\bpills?\b|\biud\b|abortion|period.track|tracking app|\bshop\b|\bdeals?\b|\bbest \d+|black friday|\bsale\b|\bbanned|shocking|denial|closure|crisis|\brisk|\bwarn|\bfear|toxic|chemical|(?<!in-)\blaws?\b|\bban\b|despair|problematic|epidemic|\bcope\b|endometriosis|\bpain|suffer|shame|poverty|scam|divorce|cheat|affair|brief letters|– review|podcast|sex work(?!s\b)|onlyfans',
+}
+
+# Words about minors. An item that has them is never filed under intimacy,
+# and is left out altogether if anything in it speaks of sex. On the other
+# pages, a baby or a child is the subject itself.
+MINORS = {
+    'fr': r'mineur|\bados?\b|adolescen|collégien|lycéen|\benfants?\b|\bbébés?\b|\bfilles?\b|\bfils\b|\bélèves?\b',
+    'en': r'\bteen|\bchild|\bkids?\b|\bbab(y|ies)\b|schoolgirl|underage|\bminors?\b|\bdaughters?\b|\bsons?\b|\bpupils?\b',
 }
 
 # Someone speaking for herself.
@@ -231,6 +253,11 @@ def topic_of(language, item, default):
     if re.search(NOT_LIGHT[language], text):
         return None
     title = item['title'].lower()
+    intimacy = WORDS[language][-1][1]
+    about_minors = re.search(MINORS[language], text) is not None
+    # Sex and minors never meet, on any page.
+    if about_minors and (default == INTIMACY or re.search(intimacy, text)):
+        return None
     # Anything about sex goes to the page about intimacy and nowhere else:
     # the general page is open to all, minors included.
     if default == INTIMACY:
